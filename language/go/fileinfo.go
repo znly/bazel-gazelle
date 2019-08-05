@@ -129,6 +129,13 @@ func (g tagGroup) check(c *config.Config, os, arch string) bool {
 				return false
 			}
 			match = os == t
+			if !match {
+				for _, alias := range rule.OSAliases[os] {
+					if alias == t {
+						return true
+					}
+				}
+			}
 		} else if _, ok := rule.KnownArchSet[t]; ok {
 			if arch == "" {
 				return false
